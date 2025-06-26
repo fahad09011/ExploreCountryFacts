@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
+
+    <title>Fetch 3</title>
+
+    <style>
+        body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  color: #EAEAEA;
+  font-family: Arial, sans-serif;
+}
+
+.main_container {
+  width: 50vw;
+  min-height: 90vh;
+  margin: 2rem auto;
+  background-color: #1E1E2F;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.header {
+  width: 100%;
+}
+
+.header_list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+.header_list li {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  height: 200px;
+}
+
+.title_and_dropdown_container h2 {
+  color: #00D1FF;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.drop_down {
+  background-color: #2D2D44;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(243, 244, 244, 0.2);
+}
+
+.drop_down p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+select {
+  background-color: #1E1E2F;
+  color: #EAEAEA;
+  padding: 0.5rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  width: 100%;
+  outline: none;
+  border: none;
+  
+}
+
+.country_data_section {
+  width: 100%;
+  display: grid;
+  grid-template-areas:
+    "info_container map_container"
+    "info_container flag_container";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  height: 400px;
+  margin-top: 2rem;
+}
+
+.info_container {
+  grid-area: info_container;
+  background-color: #2D2D44;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-y: auto;
+}
+
+.info_container h2 {
+  color: #00D1FF;
+  margin-bottom: 1rem;
+}
+
+.map_container,
+.flag_container {
+  background-color: #2A2A3C;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+@media only screen and (max-width: 768px) {
+  .main_container {
+    width: 90vw;
+    
+  }
+ 
+  .header_list {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .header_list li {
+    width: 100%;
+  }
+
+  .logo {
+    height: 150px;
+  }
+
+  .country_data_section {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  
+  .map_container,
+  .flag_container {
+    width: 100%;
+    height: 300px;
+  }
+  .drop_down {
+    padding: 10px;
+  }
+
+  select {
+    width: 100%;
+  }
+}
+
+
+
+    </style>
+  </head>
+  <body>
+    <main class="main_container" id="main_container">
+        <h1>Country Facts Explorer</h1>
+      <header class="header">
+        <ul class="header_list">
+
+          <!-- drop down for countries -->
+          <li>
+            <div class="title_and_dropdown_container">
+              <h2 class="title">Country Facts</h2>
+            </div>
+            <div class="drop_down">
+                <p>Select a country to see its flag, map, and key information.</p>
+              <select id="select" autofocus>
+                <option value="">--Select Country--</option>
+              </select>
+            </div>
+          </li>
+
+          <!-- moving globe -->
+          <li>
+            <div>
+              <dotlottie-player
+                class="logo"
+                src="https://lottie.host/b28af124-45b2-41fb-a06a-e34c7fd620b6/KrZc9Du3Pd.lottie"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay
+              ></dotlottie-player>
+            </div>
+          </li>
+        </ul>
+      </header>
+      <section class="country_data_section">
+        <aside class="info_container info">
+          <h2>Country Infromation</h2>
+          <p>
+            <strong>Name: <span id="name"></span></strong>
+          </p>
+          <p>
+            <strong>Capital: <span id="capital"></span></strong>
+          </p>
+          <p>
+            <strong>Area: <span id="area"></span></strong>
+          </p>
+          <p>
+            <strong>Region: <span id="region"></span></strong>
+          </p>
+          <p>
+            <strong>Population: <span id="population"></span></strong>
+          </p>
+          <p>
+            <strong>Languages: <span id="languages"></span></strong>
+          </p>
+          <p>
+            <strong>Timezones: <span id="timezones"></span></strong>
+          </p>
+          <p><strong></strong></p>
+        </aside>
+
+        <div id="main_map_container" class="info map_container">
+          <iframe id="map_container_frame" class="frame" src="" frameborder="0"></iframe>
+        </div>
+
+        <div id="flag_container" class="flag_container"></div>
+      </section>
+    </main>
+
+    <script>
+      let select = document.getElementById("select");
+      let name = document.getElementById("name");
+      let capital = document.getElementById("capital");
+      let area = document.getElementById("area");
+      let region = document.getElementById("region");
+      let population = document.getElementById("population");
+      let languages = document.getElementById("languages");
+      let timezones = document.getElementById("timezones");
+
+      let main_flag_container = document.getElementById("flag_container");
+      let map_container = document.getElementById("map_container_frame");
+      let countryData = [];
+      fetch(
+        "https://restcountries.com/v3.1/all?fields=name,cca2,capital,maps,flags,area,region,population,languages,timezones"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((country) => {
+            countryData = data.sort((a , b) => a.name.common.localeCompare(b.name.common));
+            let option = document.createElement("option");
+            option.innerHTML="";
+            option.innerHTML = country.name.common;
+            option.value = country.cca2;
+            select.appendChild(option);
+          });
+
+          select.addEventListener("change", () => {
+            selected_value = select.value;
+            let selectedCountry = countryData.find((country) => {
+              return country.cca2 === selected_value;
+            });
+            let countryName = selectedCountry.name.common.toLowerCase();
+
+            name.textContent = countryName;
+            capital.textContent = selectedCountry.capital;
+            area.textContent = selectedCountry.area+" km²";
+            region.textContent = selectedCountry.region;
+            population.textContent = selectedCountry.population.toLocaleString();
+
+            languages.textContent = Object.values(selectedCountry.languages);
+            timezones.textContent = selectedCountry.timezones;
+
+            map_container.src = `https://maps.google.com/maps?q=${countryName}&output=embed`;
+
+            // creating img tag for flag
+            main_flag_container.innerHTML="";
+            let flag_img = document.createElement("img");
+            flag_img.src= selectedCountry.flags.png;
+            flag_img.alt = `${selectedCountry.name.common} flag`;
+            flag_img.className="frame";
+            main_flag_container.appendChild(flag_img);
+
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>
